@@ -28,6 +28,8 @@ func NewHandle(logger *logging.Logger, s Service) *Handle{
 
 //handler should listen on a port, GET should be done on service level
 func (h *Handle) GetHexFromHexbot(ctx context.Context) (err error){
+
+	//create interface for this
 	resp, err := http.Get("https://api.noopschallenge.com/hexbot")
 	if err != nil {
 		return errors.Wrap(err, "problem getting hex from hexbot")
