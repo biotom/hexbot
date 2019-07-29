@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="95146b21-b768-469b-87c1-5e5c2e2942d4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/internal/db/db.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/service/service.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/handler/get_hex.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handler/get_hex.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/service/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/service/service.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -27,8 +25,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/internal/service/service.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="346">
-              <caret line="30" column="34" selection-start-line="30" selection-start-column="34" selection-end-line="30" selection-end-column="34" />
+            <state relative-caret-position="15">
+              <caret line="21" column="1" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
               <folding>
                 <element signature="e#17#64#0" expanded="true" />
               </folding>
@@ -40,7 +38,7 @@
         <entry file="file://$PROJECT_DIR$/internal/db/db.go">
           <provider selected="true" editor-type-id="text-editor">
             <state>
-              <caret column="10" lean-forward="true" selection-start-column="10" selection-end-column="10" />
+              <caret column="10" selection-start-column="10" selection-end-column="10" />
               <folding>
                 <element signature="e#12#23#0" expanded="true" />
               </folding>
@@ -213,7 +211,7 @@
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25358167" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25358167" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -226,7 +224,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.32971016" />
+      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.32971016" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -262,7 +260,7 @@
     <entry file="file://$PROJECT_DIR$/internal/db/db.go">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret column="10" lean-forward="true" selection-start-column="10" selection-end-column="10" />
+          <caret column="10" selection-start-column="10" selection-end-column="10" />
           <folding>
             <element signature="e#12#23#0" expanded="true" />
           </folding>
@@ -271,8 +269,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/internal/service/service.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="346">
-          <caret line="30" column="34" selection-start-line="30" selection-start-column="34" selection-end-line="30" selection-end-column="34" />
+        <state relative-caret-position="15">
+          <caret line="21" column="1" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
           <folding>
             <element signature="e#17#64#0" expanded="true" />
           </folding>

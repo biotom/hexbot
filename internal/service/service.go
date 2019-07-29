@@ -11,18 +11,16 @@ import (
 type ColourService struct{
 	log *logging.Logger
 	hexStream []byte
-	database *Database
+	database 	Database
 }
 
 
 
 type Database interface {
-	Connect (ctx context.Context, URI string) error
 	Save(ctx context.Context, data string) error
 }
 
-
-func NewColourService(log *logging.Logger, db *Database) *ColourService {
+func NewColourService(log *logging.Logger, db Database) *ColourService {
 	return &ColourService{log, []byte{}, db}
 }
 
@@ -51,12 +49,6 @@ func (c *ColourService) SaveColour(ctx context.Context) (err error) {
 	}
 	colourString := string(c.hexStream)
 
-	//pass this in as config
-	URI := "127.0.0.1"
-	err = c.database.Connect(ctx, URI)
-	if err != nil {
-		return errors.Wrap(err, "problem connecting to database")
-	}
 
 	err = c.database.Save(ctx, colourString)
 		if err != nil {
