@@ -10,20 +10,22 @@ import (
 	"net/http"
 )
 
-type ColourService struct{
-	log *logging.Logger
+type ColourService struct {
+	log       *logging.Logger
 	hexStream []byte
-	database 	Database
+	database  Database
 }
 
-
+type HexbotClient interface {
+	GetHexString(ctx context.Context) (string, error)
+}
 
 type Database interface {
-	Save(ctx context.Context, data string) error
+	Save(ctx context.Context, colourHex string) error
 }
 
-func NewColourService(log *logging.Logger, db Database) *ColourService {
-	return &ColourService{log, []byte{}, db}
+func NewColourService(log *logging.Logger, db Database, hc HexbotClient) *ColourService {
+	return &ColourService{log: log, hexStream: []byte{}, database: db}
 }
 
 func (c *ColourService) FetchColourFromHexbot(ctx context.Context) (err error) {
@@ -37,7 +39,7 @@ func (c *ColourService) FetchColourFromHexbot(ctx context.Context) (err error) {
 	defer resp.Body.Close()
 
 	c.hexStream, err = ioutil.ReadAll(resp.Body)
-	if err != nil{
+	if err != nil {
 		return errors.Wrap(err, "problem reading body of http response from hexbot")
 	}
 
@@ -49,11 +51,10 @@ func (c *ColourService) SaveColour(ctx context.Context) (err error) {
 	if c.hexStream == nil {
 		return errors.New("trying to save an empty colour string")
 	}
-	colourString := string(c.hexStream)
+	colourHex := string(c.hexStream)
 
-
-	err = c.database.Save(ctx, colourString)
-		if err != nil {
+	err = c.database.Save(ctx, colourHex)
+	if err != nil {
 		return errors.Wrap(err, "problem passing colour string to database layer")
 	}
 	return nil
