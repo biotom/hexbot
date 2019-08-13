@@ -1,18 +1,27 @@
 package db
 
-import(
-
+import (
+	"context"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
-type db struct {
-
+type ColourStore struct {
+	client *mongo.Client
 }
 
 
-func (db *db) NewDB() (err error){
-	return nil
+
+type MongoConnector interface {
+	Client() *mongo.Client
 }
-func (db *db) SaveColour() (err error) {
+
+func NewColourStore(c MongoConnector) (*ColourStore, error) {
+	return &ColourStore{
+		client: c.Client(),
+	}, nil
+}
+func (cs *ColourStore) SaveColour(ctx context.Context, hexString string) (err error) {
+
 	return nil
 }
 
