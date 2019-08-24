@@ -14,10 +14,10 @@ type ColourService struct {
 	log       *logging.Logger
 	hexStream []byte
 	database  Database
-	client HexbotClient
+	client HTTPClient
 }
 
-type HexbotClient interface {
+type HTTPClient interface {
 	GetHexString(ctx context.Context) (http.Response, error)
 }
 
@@ -27,13 +27,11 @@ type Database interface {
 	Save(ctx context.Context, colourHex string) error
 }
 
-func NewColourService(log *logging.Logger, db Database, hc HexbotClient) *ColourService {
+func NewColourService(log *logging.Logger, db Database, hc HTTPClient) *ColourService {
 	return &ColourService{log: log, hexStream: []byte{}, database: db}
 }
 
 func (c *ColourService) FetchColourFromHexbot(ctx context.Context) (err error) {
-	//create interface for this
-	//pass in as environmental variable or something
 
 	resp, err := c.client.GetHexString(ctx)
 	if err != nil {
@@ -63,3 +61,4 @@ func (c *ColourService) SaveColour(ctx context.Context) (err error) {
 	}
 	return nil
 }
+
