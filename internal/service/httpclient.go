@@ -6,6 +6,6 @@ type HexHTTPClient struct {
 
 }
 
-func (hc *HexHTTPClient) GetHexString(ctx context.Context){
-
+func (hc *HexHTTPClient) GetHexString(ctx context.Context) error {
+	return nil
 }
