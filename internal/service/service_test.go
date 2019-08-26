@@ -58,6 +58,8 @@ func TestColourService_FetchColourFromHexbot(t *testing.T) {
 
 			s.httpClient.EXPECT().GetHexString(gomock.Any()).Return(tt.GETerr)
 
+
+
 			err := s.service.FetchColourFromHexbot(context.Background())
 
 			if tt.ExpectedError != nil{
