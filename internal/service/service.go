@@ -6,22 +6,20 @@ import (
 	"context"
 	"github.com/River-Island/product-backbone-v2/logging"
 	"github.com/pkg/errors"
+	"io"
 	"io/ioutil"
-	"net/http"
 )
 
 type ColourService struct {
 	log       *logging.Logger
 	hexStream []byte
 	database  Database
-	client HTTPClient
+	client    HTTPClient
 }
 
 type HTTPClient interface {
-	GetHexString(ctx context.Context) (http.Response, error)
+	GetHexString(ctx context.Context) (body io.ReadCloser , err error)
 }
-
-
 
 type Database interface {
 	Save(ctx context.Context, colourHex string) error
@@ -38,9 +36,9 @@ func (c *ColourService) FetchColourFromHexbot(ctx context.Context) (err error) {
 		return errors.Wrap(err, "problem getting hex from hexbot")
 	}
 
-	defer resp.Body.Close()
+	defer resp.Close()
 
-	c.hexStream, err = ioutil.ReadAll(resp.Body)
+	c.hexStream, err = ioutil.ReadAll(resp)
 	if err != nil {
 		return errors.Wrap(err, "problem reading body of http response from hexbot")
 	}
@@ -61,4 +59,3 @@ func (c *ColourService) SaveColour(ctx context.Context) (err error) {
 	}
 	return nil
 }
-

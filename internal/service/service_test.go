@@ -3,11 +3,13 @@ package service_test
 import (
 	"context"
 	"errors"
+	"hexbot/internal/service"
+	"io"
+	"testing"
+
 	"github.com/River-Island/product-backbone-v2/logging"
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/require"
-	"hexbot/internal/service"
-	"testing"
 )
 
 type testService struct {
@@ -27,7 +29,6 @@ func newTestService(t *testing.T) *testService {
 		mockDB:     db,
 		httpClient: hc,
 		service:    service.NewColourService(logging.NopLogger, db, hc),
-		//needs a hexbot client
 	}
 	return s
 }
@@ -40,11 +41,13 @@ func TestColourService_FetchColourFromHexbot(t *testing.T) {
 
 	tests := []struct {
 		Desc          string
+		Body          io.ReadCloser
 		GETerr        error
 		ExpectedError error
 	}{
 		{
-			Desc:          "fails due to GET error",
+			Desc: "fails due to GET error",
+			Body: nil,
 			GETerr:        errors.New("GET unsuccessful"),
 			ExpectedError: errors.New("problem getting hex from hexbot: GET unsuccessful"),
 		},
@@ -56,18 +59,16 @@ func TestColourService_FetchColourFromHexbot(t *testing.T) {
 			s := newTestService(t)
 			defer s.Finish()
 
-			s.httpClient.EXPECT().GetHexString(gomock.Any()).Return(tt.GETerr)
-
-
+			s.httpClient.EXPECT().GetHexString(gomock.Any()).Return(tt.Body, tt.GETerr)
 
 			err := s.service.FetchColourFromHexbot(context.Background())
 
-			if tt.ExpectedError != nil{
+			if tt.ExpectedError != nil {
 				require.Error(t, err)
 				require.EqualError(t, err, tt.ExpectedError.Error())
 
 			} else {
-				require.NoError(t,err)
+				require.NoError(t, err)
 			}
 
 		})

@@ -7,7 +7,7 @@ package service
 import (
 	context "context"
 	gomock "github.com/golang/mock/gomock"
-	http "net/http"
+	io "io"
 	reflect "reflect"
 )
 
@@ -35,10 +35,10 @@ func (m *MockHTTPClient) EXPECT() *MockHTTPClientMockRecorder {
 }
 
 // GetHexString mocks base method
-func (m *MockHTTPClient) GetHexString(ctx context.Context) (http.Response, error) {
+func (m *MockHTTPClient) GetHexString(ctx context.Context) (io.ReadCloser, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetHexString", ctx)
-	ret0, _ := ret[0].(http.Response)
+	ret0, _ := ret[0].(io.ReadCloser)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
