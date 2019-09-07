@@ -1,4 +1,6 @@
-package service
+//go:generate mockgen -package httpclient -source=httpclient.go -destination httpclient_mock.go
+
+package httpclient
 
 import "context"
 

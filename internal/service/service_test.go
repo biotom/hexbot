@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"hexbot/internal/service"
-	"io"
 	"testing"
 
 	"github.com/River-Island/product-backbone-v2/logging"
@@ -41,13 +40,13 @@ func TestColourService_FetchColourFromHexbot(t *testing.T) {
 
 	tests := []struct {
 		Desc          string
-		Body          io.ReadCloser
+		Colour        string
 		GETerr        error
 		ExpectedError error
 	}{
 		{
-			Desc: "fails due to GET error",
-			Body: nil,
+			Desc:          "fails due to GET error",
+			Colour:        "0000ff",
 			GETerr:        errors.New("GET unsuccessful"),
 			ExpectedError: errors.New("problem getting hex from hexbot: GET unsuccessful"),
 		},
@@ -59,9 +58,11 @@ func TestColourService_FetchColourFromHexbot(t *testing.T) {
 			s := newTestService(t)
 			defer s.Finish()
 
-			s.httpClient.EXPECT().GetHexString(gomock.Any()).Return(tt.Body, tt.GETerr)
+			ctx := context.Background()
 
-			err := s.service.FetchColourFromHexbot(context.Background())
+			s.httpClient.EXPECT().GetColour(ctx).Return(tt.Colour, nil)
+
+			_, err := s.service.FetchColourFromHexbot(ctx)
 
 			if tt.ExpectedError != nil {
 				require.Error(t, err)

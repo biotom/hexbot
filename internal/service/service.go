@@ -6,54 +6,43 @@ import (
 	"context"
 	"github.com/River-Island/product-backbone-v2/logging"
 	"github.com/pkg/errors"
-	"io"
-	"io/ioutil"
 )
 
 type Service struct {
 	log       *logging.Logger
-	hexStream []byte
 	database  Database
 	client    HTTPClient
 }
 
 type HTTPClient interface {
-	GetHexString(ctx context.Context) (body io.ReadCloser , err error)
+	GetColour(ctx context.Context) (colour string , err error)
 }
 
 type Database interface {
-	Save(ctx context.Context, colourHex string) error
+	Save(ctx context.Context, colour string) error
 }
 
 func NewService(log *logging.Logger, db Database, hc HTTPClient) *Service {
-	return &Service{log: log, hexStream: []byte{}, database: db}
+	return &Service{log: log, database: db}
 }
 
-func (s *Service) FetchColourFromHexbot(ctx context.Context) (err error) {
+func (s *Service) FetchColourFromHexbot(ctx context.Context) (colour string, err error) {
 
-	resp, err := s.client.GetHexString(ctx)
+	colour, err = s.client.GetColour(ctx)
 	if err != nil {
-		return errors.Wrap(err, "problem getting hex from hexbot")
+		return "", errors.Wrap(err, "problem getting colour from hexbot")
 	}
 
-	defer resp.Close()
-
-	s.hexStream, err = ioutil.ReadAll(resp)
-	if err != nil {
-		return errors.Wrap(err, "problem reading body of http response from hexbot")
-	}
-
-	return nil
+	return colour, nil
 
 }
 
-func (s *Service) SaveColour(ctx context.Context) (err error) {
-	if s.hexStream == nil {
+func (s *Service) SaveColour(ctx context.Context, colour string) (err error) {
+	if colour == "" {
 		return errors.New("trying to save an empty colour string")
 	}
-	colourHex := string(s.hexStream)
 
-	err = s.database.Save(ctx, colourHex)
+	err = s.database.Save(ctx, colour)
 	if err != nil {
 		return errors.Wrap(err, "problem passing colour string to database layer")
 	}

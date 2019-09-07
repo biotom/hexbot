@@ -7,7 +7,6 @@ package service
 import (
 	context "context"
 	gomock "github.com/golang/mock/gomock"
-	io "io"
 	reflect "reflect"
 )
 
@@ -34,19 +33,19 @@ func (m *MockHTTPClient) EXPECT() *MockHTTPClientMockRecorder {
 	return m.recorder
 }
 
-// GetHexString mocks base method
-func (m *MockHTTPClient) GetHexString(ctx context.Context) (io.ReadCloser, error) {
+// GetColour mocks base method
+func (m *MockHTTPClient) GetColour(ctx context.Context) (string, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetHexString", ctx)
-	ret0, _ := ret[0].(io.ReadCloser)
+	ret := m.ctrl.Call(m, "GetColour", ctx)
+	ret0, _ := ret[0].(string)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// GetHexString indicates an expected call of GetHexString
-func (mr *MockHTTPClientMockRecorder) GetHexString(ctx interface{}) *gomock.Call {
+// GetColour indicates an expected call of GetColour
+func (mr *MockHTTPClientMockRecorder) GetColour(ctx interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetHexString", reflect.TypeOf((*MockHTTPClient)(nil).GetHexString), ctx)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetColour", reflect.TypeOf((*MockHTTPClient)(nil).GetColour), ctx)
 }
 
 // MockDatabase is a mock of Database interface
@@ -73,15 +72,15 @@ func (m *MockDatabase) EXPECT() *MockDatabaseMockRecorder {
 }
 
 // Save mocks base method
-func (m *MockDatabase) Save(ctx context.Context, colourHex string) error {
+func (m *MockDatabase) Save(ctx context.Context, colour string) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Save", ctx, colourHex)
+	ret := m.ctrl.Call(m, "Save", ctx, colour)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // Save indicates an expected call of Save
-func (mr *MockDatabaseMockRecorder) Save(ctx, colourHex interface{}) *gomock.Call {
+func (mr *MockDatabaseMockRecorder) Save(ctx, colour interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Save", reflect.TypeOf((*MockDatabase)(nil).Save), ctx, colourHex)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Save", reflect.TypeOf((*MockDatabase)(nil).Save), ctx, colour)
 }
