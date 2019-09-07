@@ -17,7 +17,7 @@ type testService struct {
 	log        *logging.Logger
 	mockDB     *service.MockDatabase
 	httpClient *service.MockHTTPClient
-	service    *service.ColourService
+	service    *service.Service
 }
 
 func newTestService(t *testing.T) *testService {
@@ -28,7 +28,7 @@ func newTestService(t *testing.T) *testService {
 		ctrl:       ctrl,
 		mockDB:     db,
 		httpClient: hc,
-		service:    service.NewColourService(logging.NopLogger, db, hc),
+		service:    service.NewService(logging.NopLogger, db, hc),
 	}
 	return s
 }
