@@ -5,7 +5,6 @@
 package service
 
 import (
-	context "context"
 	gomock "github.com/golang/mock/gomock"
 	reflect "reflect"
 )
@@ -34,18 +33,18 @@ func (m *MockHTTPClient) EXPECT() *MockHTTPClientMockRecorder {
 }
 
 // GetColour mocks base method
-func (m *MockHTTPClient) GetColour(ctx context.Context) (string, error) {
+func (m *MockHTTPClient) GetColour() (string, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetColour", ctx)
+	ret := m.ctrl.Call(m, "GetColour")
 	ret0, _ := ret[0].(string)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetColour indicates an expected call of GetColour
-func (mr *MockHTTPClientMockRecorder) GetColour(ctx interface{}) *gomock.Call {
+func (mr *MockHTTPClientMockRecorder) GetColour() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetColour", reflect.TypeOf((*MockHTTPClient)(nil).GetColour), ctx)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetColour", reflect.TypeOf((*MockHTTPClient)(nil).GetColour))
 }
 
 // MockDatabase is a mock of Database interface
@@ -72,15 +71,15 @@ func (m *MockDatabase) EXPECT() *MockDatabaseMockRecorder {
 }
 
 // Save mocks base method
-func (m *MockDatabase) Save(ctx context.Context, colour string) error {
+func (m *MockDatabase) Save(colour string) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Save", ctx, colour)
+	ret := m.ctrl.Call(m, "Save", colour)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // Save indicates an expected call of Save
-func (mr *MockDatabaseMockRecorder) Save(ctx, colour interface{}) *gomock.Call {
+func (mr *MockDatabaseMockRecorder) Save(colour interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Save", reflect.TypeOf((*MockDatabase)(nil).Save), ctx, colour)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Save", reflect.TypeOf((*MockDatabase)(nil).Save), colour)
 }

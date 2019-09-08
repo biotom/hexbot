@@ -2,12 +2,10 @@
 
 package httpclient
 
-import "context"
-
 type HexHTTPClient struct {
 
 }
 
-func (hc *HexHTTPClient) GetHexString(ctx context.Context) error {
+func (hc *HexHTTPClient) GetHexString() error {
 	return nil
 }

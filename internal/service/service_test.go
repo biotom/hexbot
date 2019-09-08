@@ -1,7 +1,6 @@
 package service_test
 
 import (
-	"context"
 	"errors"
 	"hexbot/internal/service"
 	"testing"
@@ -46,7 +45,6 @@ func TestColourService_FetchColourFromHexbot(t *testing.T) {
 	}{
 		{
 			Desc:          "fails due to GET error",
-			Colour:        "0000ff",
 			GETerr:        errors.New("GET unsuccessful"),
 			ExpectedError: errors.New("problem getting hex from hexbot: GET unsuccessful"),
 		},
@@ -58,11 +56,10 @@ func TestColourService_FetchColourFromHexbot(t *testing.T) {
 			s := newTestService(t)
 			defer s.Finish()
 
-			ctx := context.Background()
 
-			s.httpClient.EXPECT().GetColour(ctx).Return(tt.Colour, nil)
+			s.httpClient.EXPECT().GetColour().Return(tt.Colour, tt.GETerr).AnyTimes()
 
-			_, err := s.service.FetchColourFromHexbot(ctx)
+			_, err := s.service.FetchColourFromHexbot()
 
 			if tt.ExpectedError != nil {
 				require.Error(t, err)

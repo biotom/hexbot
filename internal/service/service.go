@@ -3,7 +3,6 @@
 package service
 
 import (
-	"context"
 	"github.com/River-Island/product-backbone-v2/logging"
 	"github.com/pkg/errors"
 )
@@ -15,20 +14,20 @@ type Service struct {
 }
 
 type HTTPClient interface {
-	GetColour(ctx context.Context) (colour string , err error)
+	GetColour() (colour string , err error)
 }
 
 type Database interface {
-	Save(ctx context.Context, colour string) error
+	Save(colour string) error
 }
 
 func NewService(log *logging.Logger, db Database, hc HTTPClient) *Service {
 	return &Service{log: log, database: db}
 }
 
-func (s *Service) FetchColourFromHexbot(ctx context.Context) (colour string, err error) {
+func (s *Service) FetchColourFromHexbot() (colour string, err error) {
 
-	colour, err = s.client.GetColour(ctx)
+	colour, err = s.client.GetColour()
 	if err != nil {
 		return "", errors.Wrap(err, "problem getting colour from hexbot")
 	}
@@ -37,12 +36,12 @@ func (s *Service) FetchColourFromHexbot(ctx context.Context) (colour string, err
 
 }
 
-func (s *Service) SaveColour(ctx context.Context, colour string) (err error) {
+func (s *Service) SaveColour(colour string) (err error) {
 	if colour == "" {
 		return errors.New("trying to save an empty colour string")
 	}
 
-	err = s.database.Save(ctx, colour)
+	err = s.database.Save(colour)
 	if err != nil {
 		return errors.Wrap(err, "problem passing colour string to database layer")
 	}
