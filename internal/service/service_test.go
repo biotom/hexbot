@@ -78,12 +78,20 @@ func TestService_SaveColour(t *testing.T) {
 	tests := []struct {
 		Desc string
 		Colour string
+		Database bool
 		ExpectedErr error
+		DBErr error
 	}{
 		{
 			Desc: "should fail because of an empty  colour  string",
 			Colour: "",
 			ExpectedErr: errors.New("trying to save an empty colour string"),
+		},{
+			Desc: "should fail because of a problem sending a colour string tot he database",
+			Colour: "#ff0000",
+			Database: true,
+			ExpectedErr: errors.New("problem passing colour string to database layer: error"),
+			DBErr: errors.New("error"),
 		},
 	}
 
@@ -91,6 +99,10 @@ func TestService_SaveColour(t *testing.T) {
 		t.Run(tt.Desc, func(t *testing.T) {
 			s := newTestService(t)
 			defer s.Finish()
+
+			if tt.Database {
+				s.mockDB.EXPECT().Save(tt.Colour).Return(tt.DBErr)
+			}
 
 			err  := s.service.SaveColour(tt.Colour)
 
