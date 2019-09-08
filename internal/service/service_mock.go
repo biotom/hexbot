@@ -32,19 +32,19 @@ func (m *MockHTTPClient) EXPECT() *MockHTTPClientMockRecorder {
 	return m.recorder
 }
 
-// GetColour mocks base method
-func (m *MockHTTPClient) GetColour() (string, error) {
+// GetColourFromHexbot mocks base method
+func (m *MockHTTPClient) GetColourFromHexbot() (string, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetColour")
+	ret := m.ctrl.Call(m, "GetColourFromHexbot")
 	ret0, _ := ret[0].(string)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// GetColour indicates an expected call of GetColour
-func (mr *MockHTTPClientMockRecorder) GetColour() *gomock.Call {
+// GetColourFromHexbot indicates an expected call of GetColourFromHexbot
+func (mr *MockHTTPClientMockRecorder) GetColourFromHexbot() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetColour", reflect.TypeOf((*MockHTTPClient)(nil).GetColour))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetColourFromHexbot", reflect.TypeOf((*MockHTTPClient)(nil).GetColourFromHexbot))
 }
 
 // MockDatabase is a mock of Database interface

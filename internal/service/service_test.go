@@ -35,7 +35,7 @@ func (s *testService) Finish() {
 	s.ctrl.Finish()
 }
 
-func TestColourService_FetchColourFromHexbot(t *testing.T) {
+func TestService_FetchColourFromHexbot(t *testing.T) {
 
 	tests := []struct {
 		Desc          string
@@ -56,10 +56,9 @@ func TestColourService_FetchColourFromHexbot(t *testing.T) {
 			s := newTestService(t)
 			defer s.Finish()
 
+			s.httpClient.EXPECT().GetColourFromHexbot().Return(tt.Colour, tt.GETerr)
 
-			s.httpClient.EXPECT().GetColour().Return(tt.Colour, tt.GETerr).AnyTimes()
-
-			_, err := s.service.FetchColourFromHexbot()
+			_, err := s.service.FetchColour()
 
 			if tt.ExpectedError != nil {
 				require.Error(t, err)
@@ -73,4 +72,34 @@ func TestColourService_FetchColourFromHexbot(t *testing.T) {
 
 	}
 
+}
+
+func TestService_SaveColour(t *testing.T) {
+	tests := []struct {
+		Desc string
+		Colour string
+		ExpectedErr error
+	}{
+		{
+			Desc: "should fail because of an empty  colour  string",
+			Colour: "",
+			ExpectedErr: errors.New("trying to save an empty colour string"),
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.Desc, func(t *testing.T) {
+			s := newTestService(t)
+			defer s.Finish()
+
+			err  := s.service.SaveColour(tt.Colour)
+
+			if tt.ExpectedErr != nil  {
+				require.Error(t, err)
+				require.EqualError(t, err, tt.ExpectedErr.Error())
+			} else {
+				require.NoError(t, err)
+			}
+		})
+	}
 }

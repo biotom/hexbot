@@ -14,7 +14,7 @@ type Service struct {
 }
 
 type HTTPClient interface {
-	GetColour() (colour string , err error)
+	GetColourFromHexbot() (colour string , err error)
 }
 
 type Database interface {
@@ -25,9 +25,9 @@ func NewService(log *logging.Logger, db Database, hc HTTPClient) *Service {
 	return &Service{log: log, database: db}
 }
 
-func (s *Service) FetchColourFromHexbot() (colour string, err error) {
+func (s *Service) FetchColour() (colour string, err error) {
 
-	colour, err = s.client.GetColour()
+	colour, err = s.client.GetColourFromHexbot()
 	if err != nil {
 		return "", errors.Wrap(err, "problem getting colour from hexbot")
 	}
