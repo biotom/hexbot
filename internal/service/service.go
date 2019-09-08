@@ -5,6 +5,8 @@ package service
 import (
 	"github.com/River-Island/product-backbone-v2/logging"
 	"github.com/pkg/errors"
+	"io/ioutil"
+	"net/http"
 )
 
 type Service struct {
@@ -27,10 +29,15 @@ func NewService(log *logging.Logger, db Database, hc HTTPClient) *Service {
 
 func (s *Service) FetchColour() (colour string, err error) {
 
-	colour, err = s.client.GetColourFromHexbot()
+	resp, err := http.Get("https://api.noopschallenge.com/hexbot")
 	if err != nil {
-		return "", errors.Wrap(err, "problem getting colour from hexbot")
+		return "", errors.Wrap(err, "problem getting hex from hexbot")
 	}
+
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	colour = string(body)
 
 	return colour, nil
 
